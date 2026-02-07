@@ -57,3 +57,11 @@ pip freeze > requirements.txt
 
 7. Deactivate the Virtual Environment
 deactivate
+
+
+------------------
+
+pip install langchain-anthropic
+pip install langchain-google-genai
+
+python basic.py   
