@@ -21,11 +21,31 @@ class TravelMultiAgentGraph:
         # Import agents here to avoid circular imports
         from agents import RouterAgent, BookingAgent, ComplaintAgent, InformationAgent
 
+        # ── Pinecone RAG store (optional — degrades gracefully if not configured) ──
+        rag_store = None
+        pinecone_api_key = os.getenv("PINECONE_API_KEY")
+        pinecone_index   = os.getenv("PINECONE_INDEX_NAME", "travel-knowledge")
+        if pinecone_api_key:
+            try:
+                from rag import TravelKnowledgeStore
+                rag_store = TravelKnowledgeStore(
+                    openai_api_key=openai_api_key,
+                    pinecone_api_key=pinecone_api_key,
+                    index_name=pinecone_index,
+                )
+                rag_store.connect()
+                print(f"[RAG] Pinecone store connected (index: {pinecone_index})")
+            except Exception as e:
+                print(f"[RAG] Pinecone unavailable — information agent will use LLM only. Error: {e}")
+                rag_store = None
+        else:
+            print("[RAG] PINECONE_API_KEY not set — information agent will use LLM only")
+
         # Initialize agents
         self.router_agent      = RouterAgent(openai_api_key)
         self.booking_agent     = BookingAgent(openai_api_key)
         self.complaint_agent   = ComplaintAgent(openai_api_key)
-        self.information_agent = InformationAgent(openai_api_key)
+        self.information_agent = InformationAgent(openai_api_key, rag_store=rag_store)
 
         self.graph = self._build_graph()
 

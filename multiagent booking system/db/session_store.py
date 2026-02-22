@@ -21,7 +21,7 @@ from models.state import (
     TravelAgentState, TravelBooking, CustomerInfo, ConversationMessage
 )
 
-DB_PATH = Path(__file__).parent.parent / "sessions.db"
+DB_PATH = Path(__file__).parent.parent / "data" / "sessions.db"
 
 
 # ---------------------------------------------------------------------------
@@ -30,6 +30,7 @@ DB_PATH = Path(__file__).parent.parent / "sessions.db"
 
 def init_db() -> None:
     """Create tables if they don't exist. Safe to call on every startup."""
+    DB_PATH.parent.mkdir(parents=True, exist_ok=True)
     conn = sqlite3.connect(str(DB_PATH))
     cur  = conn.cursor()
 

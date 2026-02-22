@@ -25,8 +25,11 @@ USER app
 # Install Python dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy the application code
-COPY . .
+# Copy the application code (preserve app user ownership)
+COPY --chown=app:app . .
+
+# Pre-create the data directory as app user so Docker volume inherits ownership
+RUN mkdir -p /app/data
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
