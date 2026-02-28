@@ -1,10 +1,10 @@
 # Phidata Agent
 
-A basic AI agent built with [Phidata](https://github.com/phidatahq/phidata) and OpenAI's GPT-4o model.
+A collection of AI agents built with [Phidata](https://github.com/phidatahq/phidata) and OpenAI's GPT-4o model.
 
 ## Overview
 
-This project creates a simple conversational AI agent named **Jarvis** using the Phidata framework. The agent uses GPT-4o as its underlying model and responds with markdown-formatted output.
+This project contains multiple AI agents named **Jarvis** built using the Phidata framework. Each agent demonstrates a different capability, from basic conversational AI to web-search-powered research assistants.
 
 ## Prerequisites
 
@@ -56,15 +56,24 @@ OPENAI_API_KEY=your_openai_api_key_here
 python basic.py
 ```
 
-This will start the agent and send it the prompt `"What is the capital of France?"`, printing the response to the terminal.
+Sends the prompt `"What is the capital of France?"` to the agent and prints the response.
+
+### Run the web search agent
+
+```bash
+python websearch_agent.py
+```
+
+Runs a research-focused agent that searches the web via DuckDuckGo. It streams the response to the terminal for the query `"What are the latest AI developments?"`, with sources included in the output.
 
 ## Project Structure
 
 ```
 phidata-agent/
-├── basic.py          # Main agent definition and entry point
-├── requirements.txt  # Python dependencies
-└── .env              # Environment variables (not committed)
+├── basic.py              # Basic conversational agent
+├── websearch_agent.py    # Web search agent using DuckDuckGo
+├── requirements.txt      # Python dependencies
+└── .env                  # Environment variables (not committed)
 ```
 
 ## Dependencies
